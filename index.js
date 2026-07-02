@@ -22,6 +22,21 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 const GUILD_ID = process.env.GUILD_ID;
 
+// ── Environment variable validation ───────────────────────────────────────────
+
+const MISSING_VARS = [
+  ["DISCORD_TOKEN", TOKEN],
+  ["CLIENT_ID", CLIENT_ID],
+  ["GUILD_ID", GUILD_ID],
+].filter(([, value]) => !value);
+
+if (MISSING_VARS.length > 0) {
+  for (const [name] of MISSING_VARS) {
+    console.error(`Error: ${name} environment variable is not set`);
+  }
+  process.exit(1);
+}
+
 // ── Database ──────────────────────────────────────────────────────────────────
 
 function loadDB() {
